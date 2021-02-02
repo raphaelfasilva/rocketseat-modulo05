@@ -1,0 +1,30 @@
+{% extends "layout.njk" %}
+{% block header %}
+    <title>gym Manager - Editar membro</title>
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <section class="avatar" style="background: url(https://source.unsplash.com/collection/8325170/500x500) no-repeat center center / cover"></section>
+        <section class="details">
+            <h3>Editar Membro</h3>
+            <form method="post" action="/members?_method=PUT">
+                {% include "members/fields.njk" %}
+                <input type="hidden" name="id" value="{{member.id}}">
+            </form>
+            <form id="form-delete" action="/members?_method=DELETE" method="post">
+                <input type="hidden" name="id" value="{{member.id}}">
+                <button type="submit">Deletar</button>
+            </form>
+            <script>
+                const formDelete = document.querySelector("#form-delete")
+                formDelete.addEventListener("submit", function (event) {
+                    const confirmation = confirm("deseja deletar?")
+                    if (!confirmation) {
+                        event.preventDefault()
+                    }
+                })
+            </script>
+        </section>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{
+  "instructors": [
+    {
+      "id": 1,
+      "avatar_url": "https://source.unsplash.com/collection/8325170/500x500",
+      "name": "Raphael Silva",
+      "birth": 515635200000,
+      "gender": "M",
+      "services": "crossfit,musculação",
+      "created_at": 1610114650012
+    },
+    {
+      "id": 2,
+      "avatar_url": "https://source.unsplash.com/collection/8325171/500x500",
+      "name": " Roberto Alves",
+      "birth": 794016000000,
+      "gender": "M",
+      "services": "crossfit,body system",
+      "created_at": 1610114695647
+    },
+    {
+      "id": 3,
+      "avatar_url": "https://source.unsplash.com/collection/8325171/500x500",
+      "name": "Fabio Oliveira",
+      "birth": 757382400000,
+      "gender": "M",
+      "services": "Musculação",
+      "created_at": 1610115199591
+    }
+  ],
+  "members": [
+    {
+      "id": 1,
+      "avatar_url": "https://source.unsplash.com/collection/8325171/500x500",
+      "name": "Ciclano de tal",
+      "email": "sdsdsd@cff.com",
+      "birth": 978307200000,
+      "gender": "M",
+      "blood": "O+",
+      "height": "175",
+      "weight": "90",
+      "created_at": 1610114828521
+    },
+    {
+      "id": 2,
+      "avatar_url": "https://source.unsplash.com/collection/8325170/500x500",
+      "name": " Roberto",
+      "email": "sdsdsd@cff.com",
+      "birth": 1009843200000,
+      "gender": "M",
+      "blood": "A+",
+      "height": "123",
+      "weight": "343",
+      "created_at": 1612223586808
+    }
+  ]
+}
