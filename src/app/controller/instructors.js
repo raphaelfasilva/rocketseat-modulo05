@@ -17,7 +17,6 @@ module.exports = {
             instructor.created_at = date(instructor.created_at).format
             return res.render("instructors/show", { instructor })
         })
-        return
     },
     post(req, res) {
         const keys = Object.keys(req.body)
@@ -32,16 +31,22 @@ module.exports = {
     },
     edit(req, res) {
         const { id } = req.params
-
-        return
+        instructor.find(id, function(instructor) {
+            if (!instructor) return res.send("instrutor não encontrado")
+            instructor.birth = date(instructor.birth).iso
+            return res.render("instructors/edit", { instructor })
+        })
     },
     put(req, res) {
         const { id } = req.body
-        let index = 0
-        return
+        instructor.update(req.body, function() {
+            return res.redirect(`/instructors/${req.body.id}`)
+        })
     },
     delete(req, res) {
         const { id } = req.body
-        return
+        instructor.delete(req.body.id, function() {
+            return res.redirect("/instructors")
+        })
     }
 }
