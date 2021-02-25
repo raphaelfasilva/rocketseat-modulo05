@@ -1,14 +1,22 @@
-const { age } = require('../../lib/util')
-const { date } = require('../../lib/util')
+const instructor = require('../models/instructor')
 const db = require('../../config/db')
-
+const { date, age } = require('../../lib/util')
 module.exports = {
     index(req, res) {
-        return res.render("instructors/index")
+        instructor.all(function(instructors) {
+            return res.render("instructors/index", { instructors })
+        })
+
     },
     show(req, res) {
         const { id } = req.params
-
+        instructor.find(id, function(instructor) {
+            if (!instructor) return res.send("instrutor não encontrado")
+            instructor.age = age(instructor.birth)
+            instructor.services = instructor.services.split(",")
+            instructor.created_at = date(instructor.created_at).format
+            return res.render("instructors/show", { instructor })
+        })
         return
     },
     post(req, res) {
@@ -18,29 +26,8 @@ module.exports = {
                 return res.send("por favor validar todos os campos")
             }
         }
-        console.log(req.body)
-        const query = `
-        INSERT INTO INSTRUCTORS(
-            name,
-            avatar_url,
-            gender,
-            services,
-            birth,
-            created_at
-        ) VALUES ($1,$2,$3,$4,$5,$6)
-        RETURNING ID
-        `
-        const values = [
-            req.body.name,
-            req.body.avatar_url,
-            req.body.gender,
-            req.body.services,
-            req.body.birth,
-            date(Date.now()).iso
-        ]
-        db.query(query, values, function(err, results) {
-            if (err) return res.send("data base error")
-            return res.redirect(`/instructors/${results.rows[0].id}`)
+        instructor.create(req.body, function(instructor) {
+            return res.redirect(`/instructors/${instructor.id}`)
         })
     },
     edit(req, res) {
