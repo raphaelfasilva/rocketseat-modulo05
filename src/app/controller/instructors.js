@@ -1,5 +1,4 @@
 const instructor = require('../models/instructor')
-const db = require('../../config/db')
 const { date, age } = require('../../lib/util')
 module.exports = {
     index(req, res) {

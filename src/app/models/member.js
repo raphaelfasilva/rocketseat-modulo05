@@ -2,38 +2,44 @@ const db = require('../../config/db')
 const { date, age } = require('../../lib/util')
 module.exports = {
     all(callback) {
-        db.query('SELECT * from instructors', function(err, results) {
-            if (err) throw ("data base error")
+        db.query('SELECT * from members', function(err, results) {
+            if (err) throw "data base error"
             callback(results.rows)
         })
     },
     create(data, callback) {
         const query = `
-        INSERT INTO INSTRUCTORS(
+        INSERT INTO MEMBERS(
             name,
             avatar_url,
+            email,
             gender,
-            services,
             birth,
+            blood,
+            weight,
+            height,
             created_at
-        ) VALUES ($1,$2,$3,$4,$5,$6)
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
         RETURNING ID
         `
         const values = [
             data.name,
             data.avatar_url,
+            data.email,
             data.gender,
-            data.services,
             data.birth,
+            data.blood,
+            data.weight,
+            data.height,
             date(Date.now()).iso
         ]
         db.query(query, values, function(err, results) {
-            if (err) throw ("data base error")
+            if (err) throw "data base error"
             callback(results.rows[0])
         })
     },
     find(id, callback) {
-        db.query('select * from instructors where id = $1', [id], function(err, results) {
+        db.query('select * from members where id = $1', [id], function(err, results) {
             if (err) throw "data base error"
             callback(results.rows[0])
         })
