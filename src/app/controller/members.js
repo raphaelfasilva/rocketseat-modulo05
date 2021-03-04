@@ -28,15 +28,22 @@ module.exports = {
     },
     edit(req, res) {
         const { id } = req.params
-        return
+        member.find(id, function(member) {
+            member.birth = date(member.birth).iso
+            return res.render("members/edit", { member })
+        })
     },
     put(req, res) {
         const { id } = req.body
-        let index = 0
+        member.update(req.body, function() {
+            return res.redirect(`/members/${id}`)
+        })
         return
     },
     delete(req, res) {
         const { id } = req.body
-        return
+        member.delete(id, function() {
+            return res.redirect("/members")
+        })
     }
 }

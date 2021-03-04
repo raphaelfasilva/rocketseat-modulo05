@@ -2,7 +2,7 @@ const db = require('../../config/db')
 const { date, age } = require('../../lib/util')
 module.exports = {
     all(callback) {
-        db.query('SELECT * from members', function(err, results) {
+        db.query('SELECT * from members  order by name asc', function(err, results) {
             if (err) throw "data base error"
             callback(results.rows)
         })
@@ -46,30 +46,36 @@ module.exports = {
     },
     update(data, callback) {
         const query = `
-           update instructors SET 
-           avatar_url=($1),
-           name=($2),
-           birth=($3),
+           update members SET 
+           name=($1),
+           avatar_url=($2),
+           email=($3),
            gender=($4),
-           services=($5)
-           where id= $6
+           birth=($5),
+           blood=($6),
+           weight=($7),
+           height=($8)
+           where id= $9
         `
         const values = [
-            data.avatar_url,
             data.name,
-            date(data.birth).iso,
+            data.avatar_url,
+            data.email,
             data.gender,
-            data.services,
+            data.birth,
+            data.blood,
+            data.weight,
+            data.height,
             data.id
         ]
         db.query(query, values, function(err, res) {
-            if (err) throw "data base error"
+            if (err) throw err
             callback()
         })
 
     },
     delete(id, callback) {
-        db.query(`DELETE FROM instructors where id = $1`, [id], function() {
+        db.query(`DELETE FROM members where id = $1`, [id], function() {
             callback()
         })
     }
