@@ -19,9 +19,7 @@ routes.delete('/instructors', instructors.delete)
 
 routes.get('/members', members.index)
 routes.post('/members', members.post)
-routes.get('/members/create', function(req, res) {
-    return res.render("members/create")
-})
+routes.get('/members/create', members.create)
 routes.get('/members/:id', members.show)
 routes.get('/members/:id/edit', members.edit)
 routes.put('/members', members.put)

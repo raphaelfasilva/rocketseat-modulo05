@@ -6,6 +6,11 @@ module.exports = {
             return res.render("members/index", { members })
         })
     },
+    create(req, res) {
+        member.instructorsSelectoptions(function(options) {
+            return res.render("members/create", { instructorOptions: options })
+        })
+    },
     show(req, res) {
         const { id } = req.params
         member.find(id, function(member) {
@@ -28,9 +33,13 @@ module.exports = {
     },
     edit(req, res) {
         const { id } = req.params
-        member.find(id, function(member) {
-            member.birth = date(member.birth).iso
-            return res.render("members/edit", { member })
+        member.find(id, function(memberedit) {
+            if (!memberedit) return res.send("member not found")
+            memberedit.birth = date(memberedit.birth).iso
+            member.instructorsSelectoptions(function(options) {
+                return res.render("members/edit", { member: memberedit, instructorOptions: options })
+            })
+
         })
     },
     put(req, res) {
