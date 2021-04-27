@@ -11,6 +11,18 @@ module.exports = {
             callback(results.rows)
         })
     },
+    findBy(filter, callback) {
+        db.query(`SELECT instructors.*,count(members) AS total_students 
+        from instructors 
+        LEFT JOIN members ON (instructors.id = members.instructor_id)
+        where instructors.name ilike '%${filter}%' 
+        OR instructors.services ilike '%${filter}%' 
+        GROUP BY instructors.id
+        order by total_students DESC`, function(err, results) {
+            if (err) throw ("data base error")
+            callback(results.rows)
+        })
+    },
     create(data, callback) {
         const query = `
         INSERT INTO INSTRUCTORS(

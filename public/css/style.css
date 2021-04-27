@@ -245,3 +245,30 @@ tbody tr td:first-child {
     /* item acrescentado */
     align-items: center;
 }
+
+.table-container .header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.table-container .header form {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    align-items: center;
+    grid-gap: 8px;
+}
+
+.table-container.header form input {
+    border: 1px solid #eee;
+    padding: 4px 8px;
+    box-sizing: border-box;
+}
+
+.table-container .header form button {
+    margin: 0;
+}
+
+.table-container .header a {
+    width: 20%;
+}

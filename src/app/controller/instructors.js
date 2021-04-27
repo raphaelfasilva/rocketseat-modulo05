@@ -2,9 +2,17 @@ const instructor = require('../models/instructor')
 const { date, age } = require('../../lib/util')
 module.exports = {
     index(req, res) {
-        instructor.all(function(instructors) {
-            return res.render("instructors/index", { instructors })
-        })
+        const { filter } = req.query
+        if (filter) {
+            instructor.findBy(filter, function(instructors) {
+                return res.render("instructors/index", { instructors, filter })
+            })
+        } else {
+            instructor.all(function(instructors) {
+                return res.render("instructors/index", { instructors })
+            })
+
+        }
 
     },
     show(req, res) {
