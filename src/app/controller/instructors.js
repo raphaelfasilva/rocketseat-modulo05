@@ -12,18 +12,24 @@ module.exports = {
             limit,
             offset,
             callback(instructors) {
+                pagination = {
+                    filter,
+                    total,
+                    page
+                }
                 return res.render("instructors/index", { instructors, filter })
             }
         }
         instructor.paginate(params)
-            // if (filter) {
-            //     instructor.findBy(filter, function(instructors) {
-            //         return res.render("instructors/index", { instructors, filter })
-            //     })
-            // } else {
-            //     instructor.all(function(instructors) {
-            //         return res.render("instructors/index", { instructors })
-            //     })
+
+        // if (filter) {
+        //     instructor.findBy(filter, function(instructors) {
+        //         return res.render("instructors/index", { instructors, filter })
+        //     })
+        // } else {
+        //     instructor.all(function(instructors) {
+        //         return res.render("instructors/index", { instructors })
+        //     })
 
         // }
 
