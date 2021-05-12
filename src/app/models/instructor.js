@@ -2,7 +2,7 @@ const db = require('../../config/db')
 const { date, age } = require('../../lib/util')
 module.exports = {
     all(callback) {
-        db.query(`SELECT instructors.*,count(members) AS total_students 
+        db.query(`SELECT instructors.*,(SELECT * FROM instructors) AS total,count(members) AS total_students 
         from instructors 
         LEFT JOIN members ON (instructors.id = members.instructor_id) 
         GROUP BY instructors.id
@@ -85,21 +85,32 @@ module.exports = {
     },
     paginate(params) {
         const { filter, limit, offset, callback } = params
-        let query = `
-        SELECT instructors.*,count(members) as total_students 
-        FROM instructors
-        LEFT JOIN members ON  (instructors.id = members.instructor_id)`
+        let query = "",
+            filterQuery = "",
+            totalQuery = `(
+            SELECT count(*) FROM instructors
+            ) AS total`
+
         if (filter) {
-            query = `${query}
+            filterQuery = `
             WHERE instructors.name ILIKE '%${filter}%'
             OR instructors.services ILIKE '%${filter}%'
             `
+            totalQuery = `(
+            SELECT count(*) FROM instructors
+            ${filterQuery}
+            ) AS total`
         }
-        query = `${query}
+        query = `
+        SELECT instructors.*,${totalQuery},count(members) as total_students 
+        FROM instructors
+        LEFT JOIN members ON  (instructors.id = members.instructor_id)
+        ${filterQuery}
         GROUP BY instructors.id LIMIT $1 OFFSET $2
         `
         db.query(query, [limit, offset], function(err, results) {
             if (err) throw "data base error"
+            console.log(results.rows)
             callback(results.rows)
         })
     }
