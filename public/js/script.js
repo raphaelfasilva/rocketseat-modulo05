@@ -10,11 +10,11 @@ function paginate(selectedPage, totalPages) {
     let pages = [],
         oldPage
 
-    for (let current = 1; currentPage <= totalPages; currentPage++) {
-        const firstLastPage = currentPage = 1 || currentPage == totalPages;
-        const pagesAfterSelectedPage = currentPage <= selectedPage + 2
-        const pagesBeforeSelectPage = currentPage >= selectedPage - 1
-        if (firstLastPage || pagesBeforeSelectPage && pagesBeforeSelectPage) {
+    for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+        const firstLastPage = currentPage == 1 || currentPage == totalPages;
+        const pagesAfterSelectedPage = currentPage <= selectedPage + 2;
+        const pagesBeforeSelectPage = currentPage >= selectedPage - 2;
+        if (firstLastPage || pagesBeforeSelectPage && pagesAfterSelectedPage) {
             if (oldPage && currentPage - oldPage > 2) {
                 pages.push("...")
             }
@@ -22,8 +22,22 @@ function paginate(selectedPage, totalPages) {
                 pages.push(oldPage + 1)
             }
             pages.push(currentPage)
-            oldPage = currentPageW
+            oldPage = currentPage
         }
     }
+    return pages
 
 }
+
+const pagination = document.querySelector(".pagination")
+const page = +pagination.dataset.page;
+const total = +pagination.dataset.total;
+console.log(pagination.dataset.page)
+console.log(pagination.dataset.total)
+const pages = paginate(page, total)
+console.log(pages)
+let elements = ""
+for (let page of pages) {
+    elements += `<a href="#">${page}</a>`
+}
+pagination.innerHTML = elements
