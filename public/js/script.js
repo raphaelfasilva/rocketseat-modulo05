@@ -32,12 +32,14 @@ function paginate(selectedPage, totalPages) {
 const pagination = document.querySelector(".pagination")
 const page = +pagination.dataset.page;
 const total = +pagination.dataset.total;
+const limit = +pagination.dataset.limit
+const filter = pagination.dataset.filter
 console.log(pagination.dataset.page)
 console.log(pagination.dataset.total)
 const pages = paginate(page, total)
 console.log(pages)
 let elements = ""
 for (let page of pages) {
-    elements += `<a href="#">${page}</a>`
+    elements += `<a href="/instructors/?page=${page}&limit=${limit}&filter=${filter}">${page}</a>`
 }
 pagination.innerHTML = elements

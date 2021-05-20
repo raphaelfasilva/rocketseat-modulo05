@@ -218,7 +218,7 @@ tbody tr td:first-child span {
 }
 
 tbody tr td:last-child a,
-.table-container a {
+.table-container button a {
     background-color: var(--primary-color);
     padding: 8px 16px;
     text-decoration: none;
@@ -271,4 +271,32 @@ tbody tr td:first-child {
 
 .table-container .header a {
     width: 20%;
+}
+
+.table-container {
+    display: grid;
+    grid-template: 64px 1fr 16px / 1fr;
+}
+
+.table-container .header {
+    margin: 0px;
+    align-self: start;
+}
+
+.table-container .pagination {
+    margin: 0;
+    align-self: end;
+    justify-self: center;
+}
+
+.pagination a,
+.pagination span {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-right: 16px;
+}
+
+.pagination a:hover {
+    filter: brightness(0.3);
+    border-bottom: 1px solid var(--primary-color);
 }
