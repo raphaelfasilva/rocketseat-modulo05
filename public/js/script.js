@@ -40,6 +40,6 @@ const pages = paginate(page, total)
 console.log(pages)
 let elements = ""
 for (let page of pages) {
-    elements += `<a href="/instructors/?page=${page}&limit=${limit}&filter=${filter}">${page}</a>`
+    elements += `<a href="${currentPage}?page=${page}&limit=${limit}&filter=${filter}">${page}</a>`
 }
 pagination.innerHTML = elements
