@@ -28,7 +28,9 @@ module.exports = {
     },
     show(req, res) {
         const { id } = req.params
+
         member.find(id, function(member) {
+            if (!member) return res.send("member not found")
             member.birth = date(member.birth).format
             member.created_at = date(member.created_at).format
             return res.render("members/show", { member })
